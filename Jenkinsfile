@@ -24,6 +24,8 @@ pipeline {
                     echo "${env.packageName}"
 
                 } 
+
+                sh 'echo "${packageName}"'
             }
 
         }
