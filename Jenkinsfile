@@ -9,7 +9,9 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                sh 'printenv'
+                sh 'echo "$DB_ENGINE"'
+                sh 'DB_ENGINE=test'
+                sh 'echo "$DB_ENGINE"'
             }
         }
     }
