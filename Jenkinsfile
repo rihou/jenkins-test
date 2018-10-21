@@ -19,7 +19,7 @@ pipeline {
                 sh 'source ./myenv'
 
                 // now continue on with variables set 
-                sh 'echo $FOO'
+                sh 'echo "$FOO"'
             }
 
         }
