@@ -10,15 +10,20 @@ pipeline {
         stage('first stage') {
             steps {
                 // write out any env vars you like to a temp file
-                sh """
-                env.packageName='my-package-1'
-                """
+                script {
+                packageName = 'my-package-1'
+                env.packageName = packageName
+            }
 
             }
         }
         stage ("later stage") {
             steps { 
-                sh 'echo ${env.packageName}'
+                script {
+                    echo "${packageName}"
+                    echo "${env.packageName}"
+
+                } 
             }
 
         }
