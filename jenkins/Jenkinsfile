@@ -25,10 +25,16 @@ pipeline {
                     //println "$key_file"
                     //println "$user"
 
-                    //git branch: 'master',
-                    //       credentialsId: '53f245a5-f460-46f4-b3f2-1fdd107df4fc',
-                    //       url: 'git@github.com:rihou/jenkins-test.git'
-                    //sh "ls -al"
+                    sh 'mkdir tmp && cd tmp'
+
+                    sh 'pwd'
+
+                    sh 'ls -al'
+
+                    git branch: 'master',
+                           credentialsId: '53f245a5-f460-46f4-b3f2-1fdd107df4fc',
+                           url: 'git@github.com:rihou/jenkins-test.git'
+                    sh "ls -al"
 
                     sshagent ( ['53f245a5-f460-46f4-b3f2-1fdd107df4fc']) {
                         sh '''
@@ -36,7 +42,7 @@ pipeline {
                             ssh-add -L
                             echo done running remote windows test
                             pwd
-                            ls
+                            ls -al
                             git status
                             git pull
                         '''
