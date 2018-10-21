@@ -9,7 +9,9 @@ pipeline {
         stage('first stage') {
             steps {
                 // write out any env vars you like to a temp file
-                sh 'env.packageName=my-package-1'
+                sh '''
+                env.packageName=my-package-1
+                '''
 
             }
         }
