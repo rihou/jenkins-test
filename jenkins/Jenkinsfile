@@ -22,14 +22,25 @@ pipeline {
 
                 withCredentials([sshUserPrivateKey(credentialsId: '53f245a5-f460-46f4-b3f2-1fdd107df4fc', keyFileVariable: 'key_file', passphraseVariable: 'pass', usernameVariable: 'user')]) {
                     // some block
-                    println "$key_file"
-                    println "$user"
+                    //println "$key_file"
+                    //println "$user"
 
-                    git branch: 'master',
-                           credentialsId: '53f245a5-f460-46f4-b3f2-1fdd107df4fc',
-                           url: 'git@github.com:rihou/jenkins-test.git'
-                    sh "ls -al"
+                    //git branch: 'master',
+                    //       credentialsId: '53f245a5-f460-46f4-b3f2-1fdd107df4fc',
+                    //       url: 'git@github.com:rihou/jenkins-test.git'
+                    //sh "ls -al"
+
+                    sshagent ( ['53f245a5-f460-46f4-b3f2-1fdd107df4fc]) {
+                        sh '''
+                            ssh -vv myuser@github.com echo testing connection || true
+                            ssh-add -L
+                            echo done running remote windows test
+                        '''
                 }
+            }
+
+            steps {
+                
             }
         }
     }
