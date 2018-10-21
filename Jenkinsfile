@@ -1,22 +1,15 @@
-#!/usr/bin/env groovy
 pipeline {
-    agent any
-
-    def content
-    stages {
-        stage('first stage') {
-            steps {
-            content = "hello"
-
+  agent any
+  stages {
+    stage("foo") {
+        steps {
+            script {
+                env.RELEASE_SCOPE = input message: 'User input required', ok: 'Release!',
+                    parameters: [choice(name: 'RELEASE_SCOPE', choices: 'patch\nminor\nmajor', 
+                                     description: 'What is the release scope?')]
             }
+            echo "${env.RELEASE_SCOPE}"
         }
-        stage ("later stage") {
-            steps {
-
-                sh 'echo "${content}"'
-            }
-
-        }
-     }
-
+    }
+  }
 }
