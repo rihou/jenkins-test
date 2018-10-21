@@ -35,7 +35,9 @@ pipeline {
                             ssh -vv myuser@github.com echo testing connection || true
                             ssh-add -L
                             echo done running remote windows test
+                            git status
                         '''
+                    }
                 }
             }
 
