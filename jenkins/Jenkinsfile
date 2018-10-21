@@ -23,6 +23,7 @@ pipeline {
                 withCredentials([sshUserPrivateKey(credentialsId: '53f245a5-f460-46f4-b3f2-1fdd107df4fc', keyFileVariable: 'key_file', passphraseVariable: 'pass', usernameVariable: 'user')]) {
                     // some block
                     println "$key_file"
+                    println "$user"
                 }
             }
         }
