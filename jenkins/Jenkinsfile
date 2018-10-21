@@ -36,6 +36,7 @@ pipeline {
                             ssh-add -L
                             echo done running remote windows test
                             git status
+                            git pull
                         '''
                     }
                 }
