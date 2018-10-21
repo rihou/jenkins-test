@@ -1,25 +1,29 @@
 pipeline {
-    agent any
-    stages {
-        /* "Build" and "Test" stages omitted */
-
-        stage('Deploy - Staging') {
-            steps {
-                sh './deploy staging'
-                sh './run-smoke-tests'
-            }
+  agent { label 'docker' }
+  stages {
+    stage('one') {
+      steps {
+        sh 'echo hotness > myfile.txt'
+        script {
+          // trim removes leading and trailing whitespace from the string
+          myVar = readFile('myfile.txt').trim()
         }
-
-        stage('Sanity check') {
-            steps {
-                input "Does the staging environment look ok?"
-            }
-        }
-
-        stage('Deploy - Production') {
-            steps {
-                sh './deploy production'
-            }
-        }
+        echo "${myVar}" // prints 'hotness'
+      }
     }
+    stage('two') {
+      steps {
+        echo "${myVar}" // prints 'hotness'
+      }
+    }
+    // this stage is skipped due to the when expression, so nothing is printed
+    stage('three') {
+      when {
+        expression { myVar != 'hotness' }
+      }
+      steps {
+        echo "three: ${myVar}"
+      }
+    }
+  }
 }
