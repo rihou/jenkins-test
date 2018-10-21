@@ -30,7 +30,7 @@ pipeline {
                     //       url: 'git@github.com:rihou/jenkins-test.git'
                     //sh "ls -al"
 
-                    sshagent ( ['53f245a5-f460-46f4-b3f2-1fdd107df4fc]) {
+                    sshagent ( ['53f245a5-f460-46f4-b3f2-1fdd107df4fc']) {
                         sh '''
                             ssh -vv myuser@github.com echo testing connection || true
                             ssh-add -L
