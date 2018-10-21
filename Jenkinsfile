@@ -1,29 +1,17 @@
 pipeline {
-  agent any
-  stages {
-    stage('one') {
-      steps {
-        sh 'echo hotness > myfile.txt'
-        script {
-          // trim removes leading and trailing whitespace from the string
-          myVar = readFile('myfile.txt').trim()
+        parameters {
+            string(name: 'custom_var', defaultValue: '')
         }
-        echo "${myVar}" // prints 'hotness'
-      }
-    }
-    stage('two') {
-      steps {
-        echo "${myVar}" // prints 'hotness'
-      }
-    }
-    // this stage is skipped due to the when expression, so nothing is printed
-    stage('three') {
-      when {
-        expression { myVar != 'hotness' }
-      }
-      steps {
-        echo "three: ${myVar}"
-      }
-    }
-  }
+
+        stage("make param global") {
+             steps {
+               tmp_param =  sh (script: 'most amazing shell command', returnStdout: true).trim()
+               env.custom_var = tmp_param 
+              }
+        }
+        stage("test if param was saved") {
+            steps {
+              echo "${env.custom_var}"
+            }
+        }
 }
