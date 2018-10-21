@@ -2,30 +2,18 @@
 pipeline {
     agent any
 
-    environment {
-        packageName='my-package'
-    }
-
+    def content
     stages {
         stage('first stage') {
             steps {
-                // write out any env vars you like to a temp file
-                script {
-                packageName = 'my-package-1'
-                env.packageName = packageName
-            }
+            content = "hello"
 
             }
         }
         stage ("later stage") {
-            steps { 
-                script {
-                    echo "${packageName}"
-                    echo "${env.packageName}"
+            steps {
 
-                } 
-
-                sh 'echo "${packageName}"'
+                sh 'echo "${content}"'
             }
 
         }
