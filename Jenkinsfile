@@ -1,25 +1,21 @@
 pipeline {
     agent any
 
+    environment {
+        packageName='my-package'
+    }
+
     stages {
         stage('first stage') {
             steps {
                 // write out any env vars you like to a temp file
-                sh 'echo export FOO=baz > myenv'
+                sh 'env.packageName=my-package-1'
 
-                // stash away for later use
-                stash 'myenv'
             }
         }
         stage ("later stage") {
-            steps {
-
-                // unstash the temp file and apply it
-                unstash 'myenv'
-                sh 'source ./myenv'
-
-                // now continue on with variables set 
-                sh 'echo "$FOO"'
+            steps { 
+                sh 'echo ${env.packageName}'
             }
 
         }
