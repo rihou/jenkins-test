@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>authserver</artifactId>
+    <version>1.81.1-SNAPSHOT</version>
+    <url>http://www.cisco.com/solutions</url>
+    <packaging>jar</packaging>
+    <name>authserver</name>
+    <description>Auth server for Spring Boot</description>
+
+    <parent>
+        <groupId>com.cisco.services.rpil.framework.starters</groupId>
+        <artifactId>rpil-starter</artifactId>
+        <version>1.80.7</version>
+        <relativePath/>
+    </parent>
+
+    <properties>
+        <start-class>com.cisco.services.rpil.AuthserverApplication</start-class>
+
+        <!-- RPM profile specific properties -->
+        <service.extra.java.args></service.extra.java.args>
+
+        <!--PRODUCTION SAFE-->
+        <!--It is used on local env only-->
+        <local.debugging.port>5005</local.debugging.port>
+    </properties>
+
+    <repositories>
+
+        <repository>
+            <id>bms-artifactory-gpk</id>
+            <name>bms-artifactory-gpk-releases</name>
+            <url>http://engci-maven-master.cisco.com/artifactory/RPIL_Core-repo</url>
+        </repository>
+
+        <repository>
+            <id>spring-milestones</id>
+            <name>Spring Milestones</name>
+            <url>https://repo.spring.io/libs-milestone</url>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+		</repository>
+
+		<repository>
+            <name>bms-artifactory-sjc-snapshots</name>
+            <id>phisphere-snapshots</id>
+            <snapshots>
+                <enabled>true</enabled>
+                <updatePolicy>always</updatePolicy>
+            </snapshots>
+            <url>http://engci-maven.cisco.com/artifactory/phisphere-group</url>
+        </repository>
+
+    </repositories>
+
+    <!--this is the artifactory/repo we use any custom maven plugins that we build-->
+    <pluginRepositories>
+        <pluginRepository>
+            <id>bms-artifactory-gpk</id>
+            <name>bms-artifactory-gpk-releases</name>
+            <url>http://engci-maven-master.cisco.com/artifactory/RPIL_Core-repo</url>
+        </pluginRepository>
+    </pluginRepositories>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+			<exclusions>
+				<exclusion>
+					<groupId>org.springframework.boot</groupId>
+					<artifactId>spring-boot-starter-tomcat</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-jetty</artifactId>
+		</dependency>
+
+	    <dependency>
+            <groupId>com.github.tomakehurst</groupId>
+            <artifactId>wiremock</artifactId>
+            <version>2.8.0</version>
+            <scope>test</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.mortbay.jetty</groupId>
+                    <artifactId>jetty</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <!-- TODO this will be fixed properly as part of US26581 -->
+        <!-- Temporary haXX0r to make this runnable in a popular IDE -->
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>javax.servlet-api</artifactId>
+            <scope>compile</scope>
+        </dependency>
+
+		<dependency>
+		    <groupId>javax.xml.bind</groupId>
+		    <artifactId>jaxb-api</artifactId>
+		</dependency>
+		<dependency>
+		    <groupId>com.sun.xml.bind</groupId>
+		    <artifactId>jaxb-core</artifactId>
+		</dependency>
+		<dependency>
+		    <groupId>com.sun.xml.bind</groupId>
+		    <artifactId>jaxb-impl</artifactId>
+		</dependency>
+		<dependency>
+		    <groupId>javax.activation</groupId>
+		    <artifactId>activation</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>com.cisco.services.rpil.framework.configurations</groupId>
+			<artifactId>rpil-service-configurations</artifactId>
+			<version>${project.parent.version}</version>
+		</dependency>
+        <dependency>
+            <groupId>com.cisco.services.rpil.framework.libs</groupId>
+            <artifactId>rpil-security</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.cisco.services.rpil.framework.libs</groupId>
+            <artifactId>rpil-security-sso</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.cisco.services.rpil.framework.libs</groupId>
+            <artifactId>rpil-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>com.cisco.services.rpil.framework.libs</groupId>
+            <artifactId>rpil-tenant-management</artifactId>
+        </dependency>
+	</dependencies>
+
+    <build>
+        <finalName>authserver</finalName>
+
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+                <excludes>
+                    <exclude>**/*.vm</exclude>
+                    <exclude>keystore.jks</exclude>
+                </excludes>
+            </resource>
+
+            <resource>
+                <directory>src/main/resources</directory>
+                <includes>
+                    <include>**/*.vm</include>
+                    <include>keystore.jks</include>
+                </includes>
+            </resource>
+        </resources>
+
+        <plugins>
+            <plugin>
+                <groupId>com.atlassian.maven.plugins</groupId>
+                <artifactId>maven-jgitflow-plugin</artifactId>
+                <version>1.0-m5.1</version>
+                <configuration>
+                    <!-- Enable this to push to origin using SSH keys -->
+                    <enableSshAgent>true</enableSshAgent>
+                    <!-- Keep your maven submodules at the same version as the parent POM -->
+                    <autoVersionSubmodules>true</autoVersionSubmodules>
+                    <!--
+                      Pushing in-development features to origin allows all devs to see what each other
+                      are working on
+                    -->
+                    <pushFeatures>true</pushFeatures>
+                    <!--
+                      This allows the CI server (e.g. Jenkins) to automatically push new releases to
+                      origin; you can then either manually deploy them or, if you are doing Continuous
+                      Deployments, auto-deploy them to prod
+                    -->
+                    <pushReleases>true</pushReleases>
+                    <!--
+                      Hot Fixes should be pushed to origin as well so that any dev can pick them up
+                    -->
+                    <pushHotfixes>true</pushHotfixes>
+                    <!--
+                      Prevents deployments from dev workstations so that they can be done by a CI
+                      server
+                    -->
+                    <noDeploy>true</noDeploy>
+                    <flowInitContext>
+                        <!--
+                          You can customize your development branch name. Why? Because it's faster to type
+                          'git push origin dvlp'
+                          than
+                          'git push origin develop'
+                          ;-)
+                        -->
+                        <developBranchName>develop</developBranchName>
+                        <!-- You can also customize your tag prefixes -->
+                        <versionTagPrefix>rev-</versionTagPrefix>
+                    </flowInitContext>
+                </configuration>
+            </plugin>
+                <plugin>
+                  <artifactId>maven-help-plugin</artifactId>
+                  <version>2.1.1</version>
+                  <executions>
+                    <execution>
+                      <phase>package</phase>
+                      <goals>
+                        <goal>effective-pom</goal>
+                      </goals>
+                      <configuration>
+                        <archive>
+                          <addMavenDescriptor>false</addMavenDescriptor>
+                        </archive>
+                        <output>${project.artifactId}-ep.xml</output>
+                      </configuration>
+                    </execution>
+                  </executions>
+                </plugin>
+                <plugin>
+                  <groupId>org.codehaus.mojo</groupId>
+                  <artifactId>build-helper-maven-plugin</artifactId>
+                  <executions>
+                    <execution>
+                      <id>attach-artifacts</id>
+                      <phase>package</phase>
+                      <goals>
+                        <goal>attach-artifact</goal>
+                      </goals>
+                      <configuration>
+                        <artifacts>
+                          <artifact>
+                            <file>${project.artifactId}-ep.xml</file>
+                            <type>xml</type>
+                            <classifier>${project.artifactId}-ep</classifier>
+                          </artifact>
+                        </artifacts>
+                      </configuration>
+                    </execution>
+                  </executions>
+                </plugin>
+        </plugins>
+    </build>
+</project>
