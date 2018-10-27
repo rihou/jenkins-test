@@ -9,7 +9,7 @@ pipeline {
                 sh 'ls -al'
                 script {
                     def model = readMavenPom
-                    println model
+                    println model.getVersion()
 
                 }
                 
