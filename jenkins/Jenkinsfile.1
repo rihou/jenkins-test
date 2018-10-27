@@ -7,6 +7,12 @@ pipeline {
                 sh './deploy hello'
                 touch file: 'test.txt'
                 sh 'ls -al'
+                script {
+                    def model = readMavenPom
+                    println model
+
+                }
+                
             }
         }
     }
