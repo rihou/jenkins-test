@@ -3,6 +3,7 @@ pipeline {
     stages {
         stage('Example') {
             steps {
+                sh 'pwd'
                 sh './deploy hello'
             }
         }
