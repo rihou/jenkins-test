@@ -1,5 +1,10 @@
 pipeline {
     agent any
+    environment {
+        DISABLE_AUTH = 'true'
+        DB_ENGINE    = 'sqlite'
+        DEPLOY_TO = 'test'
+    }
     stages {
         stage('Example') {
             input {
@@ -40,6 +45,18 @@ pipeline {
         stage('Example1') {
             steps {
                     echo "123-${version}"
+            }
+        }
+
+        stage('Example Deploy') {
+            when {
+                anyOf {
+                    environment name: 'DEPLOY_TO', value: 'production'
+                    environment name: 'DEPLOY_TO', value: 'staging'
+                }
+            }
+            steps {
+                echo 'Deploying'
             }
         }
         
