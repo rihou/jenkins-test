@@ -19,6 +19,10 @@ pipeline {
                 }
                 echo "${version}"
                 sh 'echo ${version}'
+                sh 'mvn --version'
+                sh 'java -version'
+                sh 'git --version'
+                sh 'python --version'
                 
             }
         }
