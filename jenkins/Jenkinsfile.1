@@ -36,5 +36,12 @@ pipeline {
                 
             }
         }
+
+        stage('Example') {
+            steps {
+                    echo "123-${version}"
+            }
+        }
+        
     }
 }
