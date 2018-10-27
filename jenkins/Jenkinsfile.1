@@ -8,8 +8,9 @@ pipeline {
                 touch file: 'test.txt'
                 sh 'ls -al'
                 script {
-                    def model = readMavenPom
+                    def model = readMavenPom file: 'pom.xml'
                     println model.getVersion()
+                    println "hello"
 
                 }
                 
