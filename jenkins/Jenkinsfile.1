@@ -9,10 +9,14 @@ pipeline {
                 sh 'ls -al'
                 script {
                     def model = readMavenPom file: 'jenkins/pom.xml'
-                    println model.getVersion()
+                     
+                    def version = model.getVersion()
+                    println version
+
                     println "hello"
 
                 }
+                sh 'echo $version'
                 
             }
         }
