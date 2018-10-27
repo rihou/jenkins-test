@@ -5,7 +5,7 @@ pipeline {
             steps {
                 sh 'pwd'
                 sh './deploy hello'
-                touch file: test.txt
+                touch file: 'test.txt'
                 sh 'ls -al'
             }
         }
