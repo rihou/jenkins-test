@@ -11,12 +11,13 @@ pipeline {
                     def model = readMavenPom file: 'jenkins/pom.xml'
                      
                     def version = model.getVersion()
+                    env.version = version
                     println version
 
                     println "hello"
 
                 }
-                sh 'echo $version'
+                sh 'echo ${env.version}'
                 
             }
         }
