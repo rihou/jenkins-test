@@ -1,5 +1,5 @@
 pipeline {
-    agent { docker 'maven:3-alpine' } 
+    agent { docker 'alexeiled/java7-maven-git' } 
     stages {
         stage('Example Build') {
             steps {
