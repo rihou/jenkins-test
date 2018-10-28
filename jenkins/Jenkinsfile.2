@@ -1,6 +1,6 @@
 pipeline {
     agent { docker {
-        image: 'jlrigau/maven-git' 
+        image 'jlrigau/maven-git' 
         args '-v /etc/passwd:/etc/passwd'
         }
     } 
