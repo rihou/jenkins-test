@@ -1,9 +1,10 @@
 pipeline {
-    agent { docker {
-        image 'jlrigau/maven-git' 
-        args '-u root'
-        }
-    } 
+    //agent { docker {
+    //    image 'jlrigau/maven-git' 
+    //    args '-u root'
+    //    }
+    //}
+    agent any 
     stages {
         stage('Example Build') {
             steps {
