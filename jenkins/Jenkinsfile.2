@@ -14,7 +14,7 @@ pipeline {
                 sh 'python --version'
                 sh 'mkdir -p work'
                 sh 'cd work'
-                dir path:'work' {
+                dir ('work) {
                 sh 'pwd'
                 sh 'rm -rf hello'
 
@@ -28,9 +28,10 @@ pipeline {
                 }
                 sh 'pwd' 
                 sh 'ls -al'
-                sh 'ls -al work'
-                sh 'ls -al work/hello'
+                sh 'ls -al hello'
+
                 }
+                
 
             }
         }
