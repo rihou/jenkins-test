@@ -1,7 +1,7 @@
 pipeline {
     agent { docker {
         image 'jlrigau/maven-git' 
-        args '-v /etc/passwd:/etc/passwd'
+        args '-u rihou -v /etc/passwd:/etc/passwd'
         }
     } 
     stages {
