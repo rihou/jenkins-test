@@ -14,6 +14,7 @@ pipeline {
                 sh 'python --version'
                 sh 'mkdir -p work'
                 sh 'cd work'
+                sh 'rm -rf hello'
                 sshagent(['53f245a5-f460-46f4-b3f2-1fdd107df4fc']) {
                     // some block
                     sh 'ssh-add -l'
