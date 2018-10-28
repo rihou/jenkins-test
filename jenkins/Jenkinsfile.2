@@ -3,7 +3,10 @@ pipeline {
     stages {
         stage('Example Build') {
             steps {
-                sh 'mvn -B clean verify'
+                 sh 'mvn --version'
+                sh 'java -version'
+                sh 'git --version'
+                sh 'python --version'
             }
         }
     }
