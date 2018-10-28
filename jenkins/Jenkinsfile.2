@@ -7,7 +7,7 @@ pipeline {
                 sh 'java -version'
                 sh 'git --version'
                 sh 'python --version'
-                sh 'mkdir work'
+                sh 'mkdir -p work'
                 sh 'cd work'
                 sshagent(['53f245a5-f460-46f4-b3f2-1fdd107df4fc']) {
                     // some block
