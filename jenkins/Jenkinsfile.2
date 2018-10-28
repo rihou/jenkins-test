@@ -12,7 +12,9 @@ pipeline {
                 sshagent(['53f245a5-f460-46f4-b3f2-1fdd107df4fc']) {
                     // some block
                     sh 'ssh-add -l'
-                    sh 'git clone git@github.com:rihou/hello.git'
+                    //sh 'git clone git@github.com:rihou/hello.git'
+                    git branch: 'master', credentialsId: '53f245a5-f460-46f4-b3f2-1fdd107df4fc',
+                         url: 'ssh://git@github.com:rihou/hello.git'
                 }
                 sh 'ls -al'
             }
