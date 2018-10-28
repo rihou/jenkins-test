@@ -1,5 +1,9 @@
 pipeline {
-    agent { docker 'jlrigau/maven-git' } 
+    agent { docker {
+        image: 'jlrigau/maven-git' 
+        args '-v /etc/passwd:/etc/passwd'
+        }
+    } 
     stages {
         stage('Example Build') {
             steps {
