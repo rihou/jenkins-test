@@ -1,16 +1,18 @@
 #!groovy
-node {
-stage ('build') {
-   
-        echo "build ..."
-    
+pipeline {
+    agent any
+    stages {
+        stage('Example') {
+            steps {
+                echo 'Hello World'
 
-}
-//build
-stage ('test') {
-   
-        echo "test ..."
-    
-}
-//test
+                script {
+                    def browsers = ['chrome', 'firefox']
+                    for (int i = 0; i < browsers.size(); ++i) {
+                        echo "Testing the ${browsers[i]} browser"
+                    }
+                }
+            }
+        }
+    }
 }
