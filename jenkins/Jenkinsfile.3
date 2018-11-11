@@ -1,6 +1,15 @@
 #!groovy
 
-stage 'build'
+stage 'build' {
+    steps {
+        echo "build ..."
+    }
+
+}
 //build
-stage 'test'
+stage 'test' {
+    steps {
+        echo "test ..."
+    }
+}
 //test
