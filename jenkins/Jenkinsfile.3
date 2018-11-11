@@ -1,6 +1,9 @@
 #!groovy
 pipeline {
     agent any
+    environment { 
+        CC = 'clang'
+    }
     parameters {
         string(name: 'PERSON', defaultValue: 'Mr Jenkins', description: 'Who should I say hello to?')
 
@@ -23,7 +26,7 @@ pipeline {
                 script {
                     def browsers = ['chrome', 'firefox']
                     for (int i = 0; i < browsers.size(); ++i) {
-                        echo "Testing the ${browsers[i]} browser -- ${params.PERSON}"
+                        echo "Testing the ${browsers[i]} browser -- ${params.PERSON} -- ${env.CC}"
                     }
                 }
             }
