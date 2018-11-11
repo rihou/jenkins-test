@@ -17,7 +17,8 @@ pipeline {
     stages {
         stage('Example') {
             steps {
-                echo 'Hello World'
+                echo "Hello ${params.PERSON}"
+
 
                 script {
                     def browsers = ['chrome', 'firefox']
