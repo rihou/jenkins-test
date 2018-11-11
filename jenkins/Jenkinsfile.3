@@ -37,6 +37,8 @@ pipeline {
                         sh "./deploy ${env.CC}"
                     }
                 }
+
+                build job: 'test1'
             }
         }
     }
